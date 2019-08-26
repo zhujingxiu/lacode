@@ -1,0 +1,30 @@
+<?php
+return [
+    '' => '',
+    'xiao' => '小',
+    'da' => '<span class="redColor">大</span>',
+    'dan' => '單',
+    'shuang' => '<span class="redColor">雙</span>',
+    'long' => '<span class="redColor">龍</span>',
+    'hu' => '虎',
+    'he' => '和',
+    'baozi' => '<span class="redColor">豹子</span>',
+    'shunzi' => '順子',
+    'duizi' => '對子',
+    'banshun' => '半順',
+    'zaliu' => '雜六',
+
+    'no_1' => '第一球',
+    'no_2' => '第二球',
+    'no_3' => '第三球',
+    'no_4' => '第四球',
+    'no_5' => '第五球',
+    'no_6' => '第六名',
+    'no_7' => '第七名',
+    'no_8' => '第八名',
+    'no_9' => '第九名',
+    'no_10' => '第十名',
+    'guanya' => '冠亞',
+    'zonghe' => '總和',
+    'longhuhe' => ''
+];

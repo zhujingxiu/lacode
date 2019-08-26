@@ -1,0 +1,38 @@
+#container{
+    clear: both;
+}
+#container > div {
+
+    float: left;
+}
+#sidebar{
+    width:231px;
+    font-size:12px;
+    font-family:Verdana, "宋体", Arial, Sans;
+}
+#footer{
+    clear: both;
+}
+.navOne-newDown {
+    top: 30px;
+    left: 1px;
+}
+.groupSelected{
+    color:#FF0000 !important;
+}
+
+#page-content{
+    margin-left: 3px ;
+    padding: 0;
+    font-size: 12px;
+    font-family: Verdana, "宋体",Arial, Helvetica, Verdana, Geneva, sans-serif;
+}
+.th {
+    width: 700px;
+    margin-top: 15px;
+    margin-left: 12px;
+}
+.bolds{
+    font-weight: bold;
+}
+

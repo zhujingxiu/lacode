@@ -1,0 +1,57 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateMembersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('members', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('merchant_id')->unsigned()->nullable();
+            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade')->comment('上级商户');
+            $table->string('uid', 32)->unique()->default('')->comment('UUID');
+            $table->string('name', 64)->unique()->comment('用户账户');
+            $table->string('nick_name', 64)->default('')->comment('用户昵称');
+            $table->tinyInteger('status')->default(1)->comment('状态：1,激活;0,停用;-1,冻结');
+            $table->tinyInteger('online')->default(1)->comment('是否在线');
+            $table->tinyInteger('reset')->default(1)->comment('重置密码');
+            $table->string('login_token', 32)->default('')->comment('登录token，验证登录唯一');
+            $table->string('last_ip', 128)->default('')->comment('最后IP');
+            $table->timestamp('last_login')->nullable()->comment('最后登录时间');
+            $table->integer('admin_id')->default(0)->comment('添加人');
+            $table->string('password', 256)->default('');
+            $table->timestamps();
+        });
+
+        Schema::create('member_infos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('member_id')->unsigned()->nullable();
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade')->comment('会员');
+            $table->decimal('credit', 12, 2)->default(0.00)->comment('额度');
+            $table->decimal('balance', 12, 2)->default(0.00)->comment('余额');
+            $table->decimal('rate',6,2)->default(0.00)->comment('占成比例');
+            $table->enum('roulette',['a','b','c'])->default('a')->comment('用户盘口');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('members');
+        Schema::dropIfExists('member_infos');
+        Schema::enableForeignKeyConstraints();
+    }
+}

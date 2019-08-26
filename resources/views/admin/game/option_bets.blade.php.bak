@@ -1,0 +1,151 @@
+<form action="{{route('admin.game-option-bets', $game)}}" method="post" id="option-bets-form">
+    {{csrf_field()}}
+    <input type="hidden" value="{{$group_id}}" name="group_id">
+    <input type="hidden" value="{{$option->id}}" name="option[id]">
+    <input type="hidden" name="option[diff_b]">
+    <input type="hidden" name="option[diff_c]">
+    <input type="hidden" name="option[join]">
+    <input type="hidden" name="option[show]">
+    <input type="hidden" name="option[style]">
+    <div class="form-group">
+        <div class="panel-group accordion">
+            @foreach($bets as $trait => $item)
+            <div class="panel">
+                <!--Accordion title-->
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-parent="#accordion" data-toggle="collapse" href="#collapse-{{$loop->index}}">{{trait_type($trait)}} {{count($item)}}</a>
+                    </h4>
+                </div>
+
+                <!--Accordion content-->
+                <div class="panel-collapse collapse
+                        @if(!$loop->index)
+                         in
+                        @endif
+                        " id="collapse-{{$loop->index}}">
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td></td>
+                                <td>标题</td>
+                                <td>入标</td>
+                                <td>A赔率</td>
+                                <td>B赔率</td>
+                                <td>C赔率</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($item as $bet)
+                                @php
+                                $_bet = isset($odds_bets[$bet->id]) ? $odds_bets[$bet->id] : [];
+                                $_join = $_bet ? 'checked' :'';
+                                $_disabled = $_bet ? '' :'disabled';
+                                $_a_val = isset($_bet['a']) ? $_bet['a'] : 0;
+                                $_b_val = isset($_bet['b']) ? $_bet['b'] : 0;
+                                $_c_val = isset($_bet['c']) ? $_bet['c'] : 0;
+                                @endphp
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$bet->title}}</td>
+                                    <td><input type="checkbox" class="magic-checkbox bet-join" name="bet[{{$bet->id}}][join]" value="1" id="bet-join-{{$bet->id}}" {{$_join}}>
+                                        <label for="bet-join-{{$bet->id}}">是</label></td>
+                                    <td><input type="text" class="form-control bet-value-a" name="bet[{{$bet->id}}][a]" value="{{$_a_val}}" {{$_disabled}}></td>
+                                    <td><input type="text" class="form-control bet-value-b" name="bet[{{$bet->id}}][b]" value="{{$_a_val}}" {{$_disabled}}></td>
+                                    <td><input type="text" class="form-control bet-value-c" name="bet[{{$bet->id}}][c]" value="{{$_a_val}}" {{$_disabled}}></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+    </div>
+
+        <a class="btn btn-primary" id="option-bets-save" style="position: fixed;top:200px;right:20px">
+            <i class="ion-levels"></i> 保存</a>
+
+</form>
+<script>
+    var _group_option = $('#group-option-{{$group_id}}-{{$option->id}}');
+    var _diff_b = parseFloat(_group_option.find('.option-diff-b').val()).toFixed(3);
+    var _diff_c = parseFloat(_group_option.find('.option-diff-c').val()).toFixed(3);
+    _group_option.find('.option-diff-b').bind("input propertychange",function () {
+        _diff_b = parseFloat($(this).val()).toFixed(3);
+        console.log(_diff_b);
+        $.each($('.bet-value-a'),function () {
+            var thistr = $(this).parent().parent();
+            var _value = $.isNumeric($(this).val()) ? parseFloat($(this).val()).toFixed(3) : 0.000;
+            thistr.find('.bet-value-b').val(_value > _diff_b ?math_sub(_value,_diff_b) : 0.000);
+        });
+    });
+    _group_option.find('.option-diff-c').bind("input propertychange",function () {
+        _diff_c = parseFloat($(this).val()).toFixed(3);
+        $.each($('.bet-value-a'),function () {
+            var thistr = $(this).parent().parent();
+            var _value = $.isNumeric($(this).val()) ? parseFloat($(this).val()).toFixed(3) : 0.000;
+            thistr.find('.bet-value-c').val(_value > _diff_c ?math_sub(_value,_diff_c) : 0.000);
+        });
+    });
+    $('.bet-value-a').bind("input propertychange blur",function () {
+        var _value = parseFloat($(this).val()).toFixed(3) || 0.000;
+        if(!$.isNumeric(_value)){
+            layer.tips('请输入数字',$(this));
+            $(this).val('0');
+            return false;
+        }
+        var thistr = $(this).parent().parent();
+        if(!$.isNumeric(_diff_b)){
+            layer.tips('请输入数字',thistr.find('.bet-value-b'));
+            return false;
+        }else{
+            thistr.find('.bet-value-b').val(_value > _diff_b ?math_sub(_value,_diff_b) : 0.000);
+        }
+        if(!$.isNumeric(_diff_c)){
+            layer.tips('请输入数字',thistr.find('.bet-value-c'));
+            return false;
+        }else{
+            thistr.find('.bet-value-c').val(_value > _diff_c ?math_sub(_value,_diff_c) : 0.000);
+        }
+
+    });
+    $('#option-bets-save').click(function () {
+        var _show = _group_option.find('.option-show:checked').val();
+        var _join = _group_option.find('.option-join:checked').val();
+        var _style = _group_option.find('.option-style').val();
+        $('#option-bets-form [name="option[diff_b]"]').val(_diff_b);
+        $('#option-bets-form [name="option[diff_c]"]').val(_diff_c);
+        $('#option-bets-form [name="option[show]"]').val(parseInt(_show));
+        $('#option-bets-form [name="option[join]"]').val(parseInt(_join));
+        $('#option-bets-form [name="option[style]"]').val(_style);
+        $('#option-bets-form').ajaxSubmit({
+            dataType:'json',
+            success:function (json) {
+                if(json.error_code==0){
+                    $.niftyNoty({
+                        type: 'success',
+                        title: json.msg.title,
+                        message: json.msg.text,
+                        container: 'floating',
+                        timer: 3000
+                    });
+                    location.reload();
+                }else {
+
+                }
+            }
+        })
+    });
+    $('.bet-join').change(function () {
+        var thistr = $(this).parent().parent();
+        if($(this).prop("checked")){
+            thistr.find('input[disabled]').prop('disabled', false);
+        }else{
+            thistr.find('input[type="text"]').prop('disabled', true);
+        }
+    });
+</script>

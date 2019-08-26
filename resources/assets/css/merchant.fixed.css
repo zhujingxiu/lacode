@@ -1,0 +1,147 @@
+.navOne-newDown > div:hover{
+    display: block;
+}
+.inputInvalid{
+    background: #fcfdcf;
+    border-color: #ff8800;
+    color: #000;
+}
+.inputValid{
+    background: #ffffff;
+    border-color: #dddddd;
+    color: #000;
+}
+
+.filterForm .filterItem {
+    height: 20px;
+    min-height: 20px;
+    min-width: 100px;
+}
+
+.tableCreate tr:first-child{
+    height: 25px;
+}
+.tableCreate tr:not(:first-child){
+    height: 28px;
+}
+.formTips{
+    color:#0000FF
+}
+
+.blueOptions > option{
+    color:#0000FF
+}
+.main_top{
+    background: url(../img/merchant/tab_05.gif)
+}
+.tableTrait{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+.tableTrait .traitTop{
+    height: 26px;
+    color: #000!important;
+    background: url(../img/merchant/bg_g.jpg);
+    background-repeat: repeat-x;
+}
+.tableTrait .traitLine{
+    height: 24px;
+}
+.tableTrait th,.tableTrait .traitLine td{
+    border: 1px #B5D6E6 solid;
+    color: #000!important;
+}
+.tableTrait .traitLine > td:first-child{
+    background-color: #ebf4ff;
+    text-align: center;
+    height: 20px;
+    line-height: 17px;
+}
+.tableTrait .traitLine:hover td{
+    background: #FFFFA2;
+}
+
+.tableTrait input[type="text"].inputFocus, .tableRebate input[type="text"].inputFocus{
+    color: #000;
+    height: 15px;
+    width: 99px;
+    border: 1px #ccc solid;
+    padding-left:5px ;
+}
+.tableTrait input[type="text"].inputFocus:focus, .tableRebate input[type="text"].inputFocus:focus{
+    height:18px;
+    border:1px solid #A7BBD3;
+    color:#000;
+    border-color:#FF8800;
+    background:#FFFFCC;
+}
+.input2:hover{
+    width: 66px;
+    height: 17px;
+    padding-top: 2px;
+    color: #0C3E09;
+    cursor: pointer;
+    letter-spacing: 1px;
+    background: url(../img/merchant/frame1.gif);
+    background-position: -1010px 0;
+    border: none;
+    position: relative;
+}
+.tableRebate{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+.rebateGame{
+    height: 26px;
+    color: #000!important;
+    background: url(../img/merchant/bg2.jpg);
+    background-repeat: repeat-x;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 3px;
+}
+.tableRebate .rebateLine{
+
+    height: 21px!important;
+}
+.tableRebate .rebateLine > td{
+    border: 1px #b0c47a solid;
+}
+.tableRebate .rebateLine > td:first-child{
+    background: #f6fed3;
+    padding-right: 3px!important;
+    width: 11%!important;
+    height: 24px;
+    text-align: center;
+}
+.tableRebate .rebateLine:hover td,table.tableStriped tr:hover td {
+    background: #FFFFA2;
+}
+.traitSpecial{
+    color: #ffffff;
+    background-size:5px 40px;
+    background: #7f96fe  repeat-y;
+}
+
+.traitDouble{
+    color: #ffffff;
+    background-size:5px 40px;
+    background: #c67fff  repeat-y;
+}
+
+.traitSerial{
+    color: #ffffff;
+    background-size:5px 40px;
+    background: #ff877f repeat-y;
+}
+.inputstyle{
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+.redColor{
+    color: red;
+}
