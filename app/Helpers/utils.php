@@ -216,3 +216,23 @@ if(!function_exists('ajax_return')) {
         return $return;
     }
 }
+/**
+* 收集多维数据id变为一维数组
+*/
+if(!function_exists('getChildTeamIds')) {
+    function getChildTeamIds($team,&$data){
+        $data[$team['id']][] = $team['id'];
+        if (isset($team['children']) && count($team['children'])){
+            foreach ($team['children'] as $child) {
+                $t = getChildTeamIds($child,$data);
+                $data[$team['id']] = array_merge($data[$team['id']],$t[$child['id']]);
+            }
+        }
+        return $data;
+    }
+    /**
+    foreach ($d as $item) {
+        $t = getChildTeamIds($item,$tmp);
+    }
+    */
+}
