@@ -224,15 +224,15 @@ if(!function_exists('getChildTeamIds')) {
         $data[$team['id']][] = $team['id'];
         if (isset($team['children']) && count($team['children'])){
             foreach ($team['children'] as $child) {
-                $t = getChildTeamIds($child,$data);
-                $data[$team['id']] = array_merge($data[$team['id']],$t[$child['id']]);
+                getChildTeamIds($child,$data);
+                $data[$team['id']] = array_merge($data[$team['id']],$data[$child['id']]);
             }
         }
         return $data;
     }
     /**
     foreach ($d as $item) {
-        $t = getChildTeamIds($item,$tmp);
+        getChildTeamIds($item,$tmp);
     }
     */
 }
